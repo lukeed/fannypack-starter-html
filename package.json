@@ -16,7 +16,7 @@
     "url": "http://www.lukeed.com"
   },
   "devDependencies": {
-    "fannypack": "^1.2.0",
+    "fannypack": "^1.3.0",
     "gulp": "^3.9.0"
   },
   "dependencies": {
