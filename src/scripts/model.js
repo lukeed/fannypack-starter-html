@@ -7,16 +7,14 @@ export default class Model {
   constructor(storage) {
   	this.storage = storage
   }
-  
+
   /**
    * Creates a new todo model
    *
    * @param {string} [title] The title of the task
    * @param {function} [callback] The callback to fire after the model is created
    */
-  create(title = '', callback){
-  	callback = callback || () => false
-
+  create(title = '', callback = null){
   	var newItem = {
   		title: title.trim(),
   		completed: false
@@ -40,9 +38,8 @@ export default class Model {
    * //Below will find a model with foo equalling bar and hello equalling world.
    * model.read({ foo: 'bar', hello: 'world' })
    */
-  read(query, callback){
+  read(query, callback = null){
   	var queryType = typeof query
-  	callback = callback || () => false
 
   	if (queryType === 'function') {
   		callback = query

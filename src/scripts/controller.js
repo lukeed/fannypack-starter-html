@@ -78,7 +78,8 @@ export default class Controller {
    * Finishes the item editing mode successfully.
    */
   editItemSave(id, title){
-    if (title.trim()) {
+    title = title.trim()
+    if (title.length) {
   		this.model.update(id, {title}, () => {
   			this.view.render('editItemDone', {id, title})
   		})

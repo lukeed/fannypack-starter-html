@@ -9,9 +9,7 @@
  * real life you probably would be making AJAX calls
  */
 export default class Store {
-  constructor(name, callback) {
-  	callback = callback || () => false
-
+  constructor(name, callback = null) {
   	this._dbName = name
 
   	if (!localStorage[name]) {
@@ -22,7 +20,7 @@ export default class Store {
   		localStorage[name] = JSON.stringify(data)
   	}
 
-  	callback.call(this, JSON.parse(localStorage[name]))
+  	if (callback) callback.call(this, JSON.parse(localStorage[name]))
   }
 
   /**
@@ -58,9 +56,8 @@ export default class Store {
    *
    * @param {function} callback The callback to fire upon retrieving data
    */
-  findAll(callback){
-  	callback = callback || () => false
-  	callback.call(this, JSON.parse(localStorage[this._dbName]).todos)
+  findAll(callback = null){
+  	if (callback) callback.call(this, JSON.parse(localStorage[this._dbName]).todos)
   }
 
   /**
@@ -71,11 +68,9 @@ export default class Store {
    * @param {function} callback The callback to fire after saving
    * @param {number} id An optional param to enter an ID of an item to update
    */
-  save(updateData, callback, id){
+  save(updateData, callback = null, id){
   	var data = JSON.parse(localStorage[this._dbName])
   	var todos = data.todos
-
-  	callback = callback || () => false
 
   	// If an ID was actually given, find the item and update each property
   	if (id) {
@@ -89,14 +84,14 @@ export default class Store {
   		}
 
   		localStorage[this._dbName] = JSON.stringify(data)
-  		callback.call(this, JSON.parse(localStorage[this._dbName]).todos)
+  		if (callback) callback.call(this, JSON.parse(localStorage[this._dbName]).todos)
   	} else {
   		// Generate an ID
   		updateData.id = new Date().getTime()
 
   		todos.push(updateData)
   		localStorage[this._dbName] = JSON.stringify(data)
-  		callback.call(this, [updateData])
+  		if (callback) callback.call(this, [updateData])
   	}
   }
 
